@@ -6,6 +6,8 @@ import android.os.Parcelable;
 public class Book implements Parcelable {
     private String title;
     private String author;
+    private int id;
+    private String coverURL;
 
     public Book(String title, String author) {
         this.title = title;
@@ -43,6 +45,22 @@ public class Book implements Parcelable {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getCoverURL() {
+        return coverURL;
+    }
+
+    public void setCoverURL(String coverURL) {
+        this.coverURL = coverURL;
     }
 
     @Override
