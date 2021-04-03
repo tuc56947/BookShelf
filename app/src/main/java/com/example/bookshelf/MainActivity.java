@@ -11,9 +11,12 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements BookListFragment.BookSelectedInterface {
 
+    private static final int SEARCH_ACTIVITY_REQUEST_CODE = 0;
+
     FragmentManager fm;
 
     Button searchButton;
+    BookList bookList = new BookList();
 
     boolean twoPane;
     BookDetailsFragment bookDetailsFragment;
@@ -44,7 +47,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
             fm.popBackStack();
         } else if (!(fragment1 instanceof BookListFragment))
             fm.beginTransaction()
-                    .add(R.id.container1, BookListFragment.newInstance(getTestBooks()))
+                    .add(R.id.container1, BookListFragment.newInstance(bookList))
             .commit();
 
         /*
@@ -71,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
             @Override
             public void onClick(View v) {
                 Intent launchSearchIntent = new Intent(MainActivity.this, BookSearchActivity.class);
-                startActivity(launchSearchIntent);
+                startActivityForResult(launchSearchIntent, SEARCH_ACTIVITY_REQUEST_CODE);
             }
         });
 
@@ -79,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
     /*
     Generate an arbitrary list of "books" for testing
-     */
+
     private BookList getTestBooks() {
         BookList books = new BookList();
         Book book;
@@ -88,11 +91,28 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         }
         return books;
     };
+    */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == SEARCH_ACTIVITY_REQUEST_CODE){
+            System.out.println("Request Code working");
+            if (resultCode == RESULT_OK) {
+                bookList = data.getParcelableExtra("SearchedBook");
+                System.out.println(bookList.get(0).getAuthor());
+            }else{
+                System.out.println("result Code not working");
+            }
+        }else{
+            System.out.println("Request Code not working");
+        }
+    }
 
     @Override
     public void bookSelected(int index) {
         //Store the selected book to use later if activity restarts
-        selectedBook = getTestBooks().get(index);
+        selectedBook = bookList.get(index);
 
         if (twoPane)
             /*
