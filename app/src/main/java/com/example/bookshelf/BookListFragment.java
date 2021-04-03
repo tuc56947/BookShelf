@@ -9,12 +9,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
 
 public class BookListFragment extends Fragment {
 
     private static final String BOOK_LIST_KEY = "booklist";
     private BookList books;
+
+    ListView listView;
 
     BookSelectedInterface parentActivity;
 
@@ -32,6 +35,10 @@ public class BookListFragment extends Fragment {
         args.putParcelable(BOOK_LIST_KEY, books);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void update(){
+        ((BaseAdapter)listView.getAdapter()).notifyDataSetChanged();
     }
 
     @Override
@@ -60,7 +67,7 @@ public class BookListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ListView listView = (ListView) inflater.inflate(R.layout.fragment_book_list, container, false);
+        listView = (ListView) inflater.inflate(R.layout.fragment_book_list, container, false);
 
         listView.setAdapter(new BooksAdapter(getContext(), books));
 

@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     BookList bookList = new BookList();
 
     boolean twoPane;
+    BookListFragment bookListFragment = BookListFragment.newInstance(bookList);
     BookDetailsFragment bookDetailsFragment;
     Book selectedBook;
     private final String KEY_SELECTED_BOOK = "selectedBook";
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
             fm.popBackStack();
         } else if (!(fragment1 instanceof BookListFragment))
             fm.beginTransaction()
-                    .add(R.id.container1, BookListFragment.newInstance(bookList))
+                    .add(R.id.container1, bookListFragment)
             .commit();
 
         /*
@@ -99,8 +100,13 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         if (requestCode == SEARCH_ACTIVITY_REQUEST_CODE){
             System.out.println("Request Code working");
             if (resultCode == RESULT_OK) {
-                bookList = data.getParcelableExtra("SearchedBook");
-                System.out.println(bookList.get(0).getAuthor());
+                BookList searched = data.getParcelableExtra("SearchedBook");
+                System.out.println(searched.get(0).getAuthor());
+
+                for(int i = 0; i < searched.size(); i++){
+                    bookList.add(searched.get(i));
+                }
+                bookListFragment.update();
             }else{
                 System.out.println("result Code not working");
             }
