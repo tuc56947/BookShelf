@@ -9,14 +9,17 @@ public class Book implements Parcelable {
     private int id;
     private String coverURL;
 
-    public Book(String title, String author) {
+    public Book(int id, String title, String author, String coverURL) {
         this.title = title;
         this.author = author;
+        this.id = id;
+        this.coverURL = coverURL;
     }
 
     protected Book(Parcel in) {
         title = in.readString();
         author = in.readString();
+        coverURL = in.readString();
     }
 
     public static final Creator<Book> CREATOR = new Creator<Book>() {
@@ -72,5 +75,6 @@ public class Book implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(title);
         parcel.writeString(author);
+        parcel.writeString(coverURL);
     }
 }
