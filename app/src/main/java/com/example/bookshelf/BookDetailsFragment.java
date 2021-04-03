@@ -50,7 +50,7 @@ public class BookDetailsFragment extends Fragment {
 
         titleTextView = v.findViewById(R.id.titleTextView);
         authorTextView = v.findViewById(R.id.authorTextView);
-        coverImageView = v.findViewById(R.id.coverImageView);
+        //coverImageView = v.findViewById(R.id.coverImageView);
 
         /*
         Because this fragment can be created with or without
@@ -69,6 +69,6 @@ public class BookDetailsFragment extends Fragment {
     public void displayBook(Book book) {
         titleTextView.setText(book.getTitle());
         authorTextView.setText(book.getAuthor());
-        coverImageView.setImageURI(Uri.parse(book.getCoverURL()));
+        //coverImageView.setImageURI(Uri.parse(book.getCoverURL()));
     }
 }

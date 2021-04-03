@@ -4,11 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
+import android.view.View;
 
 public class MainActivity extends AppCompatActivity implements BookListFragment.BookSelectedInterface {
 
     FragmentManager fm;
+
+    Button searchButton;
 
     boolean twoPane;
     BookDetailsFragment bookDetailsFragment;
@@ -19,6 +24,8 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        searchButton = findViewById(R.id.searchButton);
 
         //Fetch selected book if there was one
         if (savedInstanceState != null)
@@ -59,6 +66,14 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                     .addToBackStack(null)
                     .commit();
         }
+
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent launchSearchIntent = new Intent(MainActivity.this, BookSearchActivity.class);
+                startActivity(launchSearchIntent);
+            }
+        });
 
     }
 
