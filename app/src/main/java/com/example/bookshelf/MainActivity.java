@@ -103,6 +103,8 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                 BookList searched = data.getParcelableExtra("SearchedBook");
                 System.out.println(searched.get(0).getAuthor());
 
+                //clear bookList for new search
+                bookList.clear();
                 for(int i = 0; i < searched.size(); i++){
                     bookList.add(searched.get(i));
                 }

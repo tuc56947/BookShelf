@@ -32,6 +32,8 @@ public class BookList implements Parcelable {
         books.add(book);
     }
 
+    public void clear() {this.books.clear();}
+
     public Book get(int position) {
         return books.get(position);
     }
